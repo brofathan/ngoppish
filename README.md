@@ -60,3 +60,19 @@ Jadi, saat user memasukkan url dari proyek kita, urls.py akan digunakan dan sete
 Kita menggunakan virtual environment dalam membuat proyek django karena untuk sebuah proyek django yang berbeda, biasanya memiliki dependencies yang berbeda. Oleh karena itu, dibutuhkanlah virtual environment agar dependencies tiap proyek terisolasi. Dalam artian, dependencies tiap-tiap proyek tidak akan bertabrakan satu sama lain. Kita bisa saja membuat proyek django tanpa venv, namun dependencies pada proyek-proyek kita harus sama. Maka, lebih baik kita menggunakan venv dalam membuat proyek.
 
 ## Jelaskan apakah itu MVC, MVT, MVVM dan perbedaan dari ketiganya.
+
+* MVC (Model-View-Controller)
+  - Model: Model adalah komponen yang menyimpan data dan berkomunikasi langsung dengan database. Model merepresentasikan data dan logika pada aplikasi kita.
+  - View: Komponen yang menampilkan data yang dimiliki model dan menampilkannya ke user dengan memanggil komponen template
+  - Controller: Komponen yang menggabungkan Model dan View
+
+* MVT (Model-View-Template)
+  - Template: Template adalah komponen yang mengatur interface yang akan ditampilkan ke user. Template berisi file-file html yang menjadi halaman dari website.
+
+* MVVM (Model-View-ViewModel)
+  - ViewModel: ViewModel adalah perantara antara komponen view dan model. ViewModel mengubah format data yang dimiliki model agar bisa ditampilkan oleh view di template
+
+* Perbedaan ketiganya:
+  - MVC digunakan untuk menerima data dari user dan akan berkomunikasi dengan database.
+  - MVT untuk menampilkannya kepada user karena adanya komponen template.
+  - MVVM lebih kepada menerima data sekaligus mengembalikannya kepada user.
