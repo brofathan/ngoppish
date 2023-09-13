@@ -1,8 +1,8 @@
 # ngoppish
 
-### Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step.
-
 [Link Adaptable](https://ngoppish.adaptable.app/main/)
+
+## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step.
 
 1. Menentukan direktori mana untuk menjadi tempat proyek django
 2. Membuat virtual environment dengan command "py -m venv env"
@@ -49,12 +49,14 @@ def main_page(request):
 
 16. Melakukan deploy di adaptable untuk repository yang baru saja dibuat di github.
 
-### Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html.
+## Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html.
 
 Jadi, saat user memasukkan url dari proyek kita, urls.py akan digunakan dan setelah itu urls.py akan memanggil fungsi main_page pada views.py. File views.py akan memanggil file main.html pada templates dan akan ditampilkan kepada user. File views.py juga akan memanggil models.py. File models.py menyiapkan models dan menyimpannya di dalam database yang data tersebut bisa di-pass ke views.py dan sekaligus ditampilkan di templates, main.html, yang nantinya akan ditampilkan juga ke user.
 
-### Jelaskan mengapa kita menggunakan virtual environment? Apakah kita tetap dapat membuat aplikasi web berbasis Django tanpa menggunakan virtual environment?
+## Jelaskan mengapa kita menggunakan virtual environment? Apakah kita tetap dapat membuat aplikasi web berbasis Django tanpa menggunakan virtual environment?
+
+<img width="600" src="https://github.com/brofathan/ngoppish/blob/main/bagandjango.png?raw=true">
 
 Kita menggunakan virtual environment dalam membuat proyek django karena untuk sebuah proyek django yang berbeda, biasanya memiliki dependencies yang berbeda. Oleh karena itu, dibutuhkanlah virtual environment agar dependencies tiap proyek terisolasi. Dalam artian, dependencies tiap-tiap proyek tidak akan bertabrakan satu sama lain. Kita bisa saja membuat proyek django tanpa venv, namun dependencies pada proyek-proyek kita harus sama. Maka, lebih baik kita menggunakan venv dalam membuat proyek.
 
-### Jelaskan apakah itu MVC, MVT, MVVM dan perbedaan dari ketiganya.
+## Jelaskan apakah itu MVC, MVT, MVVM dan perbedaan dari ketiganya.
