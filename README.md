@@ -127,9 +127,9 @@ def form_page(request):
     return render(request, "forms.html", {"form": form})
 ```
 
-request.POST or None berfungsi untuk mengecek apakah user sudah memberikan data. Jika sudah, maka data bisa diproses server. Jika belum, form tidak akan memproses data ke server.
-form.is_valid() and request.method == "POST" untuk mengecek apakah form yang disubmit sudah valid dan metodenya POST. Jika benar, maka form akan di save ke server.
-return HttpResponseRedirect(reverse('main:homepage')) berfungsi agar saat user submit form, user kembali ke homepage.
+- request.POST or None berfungsi untuk mengecek apakah user sudah memberikan data. Jika sudah, maka data bisa diproses server. Jika belum, form tidak akan memproses data ke server.
+- form.is_valid() and request.method == "POST" untuk mengecek apakah form yang disubmit sudah valid dan metodenya POST. Jika benar, maka form akan di save ke server.
+- return HttpResponseRedirect(reverse('main:homepage')) berfungsi agar saat user submit form, user kembali ke homepage.
 
 4. Membuat folder templates baru di direktori root sebagai kerangka html yang kedepannya akan dipakai di halaman-halaman lain agar struktur html lebih simpel dan terorganisir. Buat file base.html di folder root/templates dan isi kode:
 
@@ -282,4 +282,3 @@ path('json/<int:id>/', show_json_by_id, name='show_json_by_id'),
 ```http://localhost:8000/json/19```
 
 ```http://localhost:8000/xml/19```
-
