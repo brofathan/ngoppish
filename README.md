@@ -273,17 +273,17 @@ path('json/<int:id>/', show_json_by_id, name='show_json_by_id'),
 
 ## Screenshot Postman
 
-```http://localhost:8000/```
+```http://localhost:8000/```<br>
 <img width="600" src="https://github.com/brofathan/ngoppish/blob/main/img/ssHTML.png?raw=true">
 
-```http://localhost:8000/json```
+```http://localhost:8000/json```<br>
 <img width="600" src="https://github.com/brofathan/ngoppish/blob/main/img/ssJSON.png?raw=true">
 
-```http://localhost:8000/xml```
+```http://localhost:8000/xml```<br>
 <img width="600" src="https://github.com/brofathan/ngoppish/blob/main/img/ssXML.png?raw=true">
 
-```http://localhost:8000/json/19```
+```http://localhost:8000/json/19```<br>
 <img width="600" src="https://github.com/brofathan/ngoppish/blob/main/img/ssJSONid.png?raw=true">
 
-```http://localhost:8000/xml/19```
+```http://localhost:8000/xml/19```<br>
 <img width="600" src="https://github.com/brofathan/ngoppish/blob/main/img/ssXMLid.png?raw=true">
