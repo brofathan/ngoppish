@@ -1,13 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ngoppish App</title>
-</head>
-<body>
-    <h1>Welcome to ngoppish</h1>
-    <p>Nama: {{ name }}</p>
-    <p>Kelas: {{ class }}</p>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block meta %}
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ngoppish App</title>
+
+{% endblock meta %}
+
+{% block content %}
+
+<h1>Welcome to ngoppish</h1>
+<p>Nama: {{ name }}</p>
+<p>Kelas: {{ class }}</p>
+
+<p>Kamu menyimpan {{count}} item pada aplikasi ini</p>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Description</th>
+    </tr>
+
+    {% for product in products %}
+        <tr>
+            <td>{{product.name}}</td>
+            <td>{{product.amount}}</td>
+            <td>{{product.description}}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+<a href="{% url 'main:create-product' %}">
+    <button>
+        Add New Product
+    </button>
+</a>
+
+{% endblock content %}
