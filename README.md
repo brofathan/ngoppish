@@ -289,4 +289,5 @@ path('json/<int:id>/', show_json_by_id, name='show_json_by_id'),
 <img width="600" src="https://github.com/brofathan/ngoppish/blob/main/img/ssXMLid.png?raw=true">
 
 <hr>
+![image](https://github.com/brofathan/ngoppish/assets/45114836/51b60a94-8320-47eb-b76b-db25a8b5c970)
 <hr>
