@@ -287,3 +287,6 @@ path('json/<int:id>/', show_json_by_id, name='show_json_by_id'),
 
 ```http://localhost:8000/xml/19```<br>
 <img width="600" src="https://github.com/brofathan/ngoppish/blob/main/img/ssXMLid.png?raw=true">
+
+<hr>
+<hr>
