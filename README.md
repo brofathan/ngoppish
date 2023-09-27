@@ -519,3 +519,97 @@ Akun pertama: <br>
 Akun kedua: <br>
 ![image](https://github.com/brofathan/ngoppish/assets/45114836/2dad9be2-cced-4824-b1aa-14256b9eb055)
 
+16. Meng-import library baru unutk menghubungkan Model dengan user. Di file ```models.py```, tambahkan kode berikut
+
+```py
+from django.contrib.auth.models import User
+```
+
+```py
+class Product(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    ...
+```
+
+Hal ini dilakukan agar tiap user memiliki key yang berbeda pada modelnya.
+
+17. Mengganti fungsi ```form_page``` di file ```views.py``` dengan
+
+```py
+def create_product(request):
+ form = ProductForm(request.POST or None)
+
+ if form.is_valid() and request.method == "POST":
+     product = form.save(commit=False)
+     product.user = request.user
+     product.save()
+     return HttpResponseRedirect(reverse('main:show_main'))
+```
+
+Hal ini agar attribut user pada model terhubung dengan user yang men-submit
+
+18. Mengubah fungsi ```main_page``` menjadi
+
+```py
+def main_page(request):
+    products = Product.objects.filter(user=request.user)
+
+    context = {
+        'name': request.user.username,
+    ...
+...
+```
+
+Filter dilakukan untuk menampilkan product yang hanya dimiliki oleh user tersebut dan tidak menampilkan product dari user lain.
+
+19. Melakukan ```makemigrations``` dan ```migrate```
+
+20. Meng-import library untuk menyimpan data datetime di cookies
+
+```py
+import datetime
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+```
+
+21. Menambahkan kode di fungsi ```login_user``` agar data login user tersimpan di cookies dan user tidak perlu login berkali-kali selama data cookies masih ada.
+
+```py
+...
+if user is not None:
+    login(request, user)
+    response = HttpResponseRedirect(reverse("main:show_main")) 
+    response.set_cookie('last_login', str(datetime.datetime.now()))
+    return response
+...
+```
+
+22. Mengganti data pada fungsi ```main_page```, menambahkan informasi cookies
+
+```py
+data = {
+    'name': 'Fathan',
+    'class': 'C',
+    'products': products,
+    'last_login': request.COOKIES['last_login'],
+}
+```
+
+23. Menambahkan kode di fungsi ```logout_user``` agar ketika user logout, data cookies terhapus
+
+```py
+def logout_user(request):
+    logout(request)
+    response = HttpResponseRedirect(reverse('main:login'))
+    response.delete_cookie('last_login')
+    return response
+```
+
+24. Menambahkan kode di ```main.html``` untuk menunjukkan kapan user terakhir kali login
+
+```html
+<h5>Sesi terakhir login: {{ last_login }}</h5>
+```
+
+<hr>
+<hr>
