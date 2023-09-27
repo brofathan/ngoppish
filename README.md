@@ -376,3 +376,139 @@ form adalah UserCreationForm, jika form-nya valid maka save data user baru ke da
 
 {% endblock content %}
 ```
+
+4. Menyambungkan fungsi register views ke urls
+
+```py
+from main.views import *
+```
+
+```py
+path('register/', register, name='register'),
+```
+
+5. Meng-import library baru untuk membuat fungsi login di ```views.py```
+
+```py
+from django.contrib.auth import authenticate, login
+```
+
+6. Menambahkan fungsi baru yaitu login_user di ```views.py```
+
+```py
+def login_user(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('main:mainpage')
+        else:
+            messages.info(request, 'Sorry, incorrect username or password. Please try again.')
+    context = {}
+    return render(request, 'login.html', context)
+
+```
+
+Setelah user memasukkan username dan password, maka dicek oleh fungsi authenticate apakah ada user dengan username dan password tersebut. Jika ada maka lakukan fungsi login dan redirect ke mainpage
+
+7. Membuat file baru yaitu login.html di main/templates dengan isi:
+
+```html
+{% extends 'base.html' %}
+
+{% block meta %}
+    <title>Login</title>
+{% endblock meta %}
+
+{% block content %}
+
+<div class = "login">
+
+    <h1>Login</h1>
+
+    <form method="POST" action="">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Username: </td>
+                <td><input type="text" name="username" placeholder="Username" class="form-control"></td>
+            </tr>
+                    
+            <tr>
+                <td>Password: </td>
+                <td><input type="password" name="password" placeholder="Password" class="form-control"></td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td><input class="btn login_btn" type="submit" value="Login"></td>
+            </tr>
+        </table>
+    </form>
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}     
+        
+    Don't have an account yet? <a href="{% url 'main:register' %}">Register Now</a>
+
+</div>
+
+{% endblock content %}
+```
+
+8. Tambahkan urls baru untuk menghubungkan ke templates
+
+```py
+path('login/', login_user, name='login'),
+```
+
+9. Meng-import library baru untuk fungsi logout di ```views.py```
+
+```py
+from django.contrib.auth import logout
+```
+
+10. Tambahkan fungsi logout di ```views.py```
+
+```py
+def logout_user(request):
+    logout(request)
+    return redirect('main:login')
+```
+
+11. Tambahkan kode di ```main/templates/main.html``` untuk agar user bisa logout dengan button
+
+```html
+<a href="{% url 'main:logout' %}">
+    <button>
+        Logout
+    </button>
+</a>
+```
+
+12. Menghubungkan urls ke views templates
+
+```py
+path('logout/', logout_user, name='logout'),
+```
+
+13. Meng-import library baru di ```views.py``` untuk merestriksi user yang belum login untuk akses webpage mainpage
+
+```py
+from django.contrib.auth.decorators import login_required
+```
+
+14. Menambahkan kode diatas fungsi ```main_page``` di ```views.py```
+
+```py
+@login_required(login_url='/login')
+```
+
+15. Membuat dua akun dengan tiga dummy data
