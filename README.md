@@ -311,7 +311,7 @@ Cookies dalam pengembangan web defaultnya sebenarnya dibuat untuk tujuan yang po
 
 1. Meng-import library-library yang dibutuhkan untuk membuat form register di ```views.py``` yaitu:
 
-```
+```py
 from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages 
@@ -322,7 +322,7 @@ from django.contrib import messages
 
 2. Membuat fungsi baru di ```views.py``` bernama ```register```, dengan kode:
 
-```
+```py
 def register(request):
     form = UserCreationForm()
 
@@ -340,7 +340,7 @@ form adalah UserCreationForm, jika form-nya valid maka save data user baru ke da
 
 3. Membuat file baru di ```templates``` dengan nama ```register.html``` yang berisi:
 
-```
+```html
 {% extends 'base.html' %}
 
 {% block meta %}
