@@ -289,5 +289,90 @@ path('json/<int:id>/', show_json_by_id, name='show_json_by_id'),
 <img width="600" src="https://github.com/brofathan/ngoppish/blob/main/img/ssXMLid.png?raw=true">
 
 <hr>
-![image](https://github.com/brofathan/ngoppish/assets/45114836/51b60a94-8320-47eb-b76b-db25a8b5c970)
 <hr>
+
+##  Apa itu Django UserCreationForm, dan jelaskan apa kelebihan dan kekurangannya?
+
+UserCreationForm adalah class form bawaan django yang berfungsi untuk pembuatan form register pada website django. Kelebihannya, kita bisa langsung pakai saja class tersebut dan kode-kode untuk membuat form sudah tersedia, jadi memudahkan developer. Namun, kekurangannya adalah developer jadi terbatas dalam mengembangkan websitenya. Karena, fitur yang tersedia di class UserCreatioinForm belum tentu sudah cukup untuk developer.
+
+##  Apa perbedaan antara autentikasi dan otorisasi dalam konteks Django, dan mengapa keduanya penting?
+
+Autentikasi adalah proses pengecekan user dalam sebuah sistem login pada website django. Autentikasi berfungsi untuk memastikan apakah user yang melakukan login benar-benar user yang memiliki izin. Jika hal tersebut benar, maka proses otorisasi mengizinkan user untuk masuk ke dalam websitenya.
+
+## Apa itu cookies dalam konteks aplikasi web, dan bagaimana Django menggunakan cookies untuk mengelola data sesi pengguna?
+
+Cookies adalah data dari sebuah website yang disimpan di device user lewat browser, saat user sedang melakukan browsing. Django menggunakan data cookies salah satunya untuk agar user tidak bolak-balik login ke sebuah website, karena data user tersebut sudah tersimpan di browser yang berasal dari local. Selain itu, cookies juga membuat server storage lebih ringan karena data session disimpan di masing-masing device user.
+
+##  Apakah penggunaan cookies aman secara default dalam pengembangan web, atau apakah ada risiko potensial yang harus diwaspadai?
+
+Cookies dalam pengembangan web defaultnya sebenarnya dibuat untuk tujuan yang positif dan aman dalam penggunaannya. Namun, karena cookies pada umumnya menyimpan informasi data dari user pengunjung, maka banyak orang yang mengeksploitasi kegunaan cookies. Contohnya adalah Cross-Site Scripting (XSS), CSRF attack, cookie hijacking, dan lain-lain.
+
+## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+
+1. Meng-import library-library yang dibutuhkan untuk membuat form register di ```views.py``` yaitu:
+
+```
+from django.shortcuts import redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages 
+```
+
+- redirect untuk agar bisa mengganti page sesudah mengklik tombor tertentu
+- UserCreationForm adalah form register bawaan django
+
+2. Membuat fungsi baru di ```views.py``` bernama ```register```, dengan kode:
+
+```
+def register(request):
+    form = UserCreationForm()
+
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your account has been successfully created!')
+            return redirect('main:login')
+    context = {'form':form}
+    return render(request, 'register.html', context)
+```
+
+form adalah UserCreationForm, jika form-nya valid maka save data user baru ke database lalu rediret ke login.
+
+3. Membuat file baru di ```templates``` dengan nama ```register.html``` yang berisi:
+
+```
+{% extends 'base.html' %}
+
+{% block meta %}
+    <title>Register</title>
+{% endblock meta %}
+
+{% block content %}  
+
+<div class = "login">
+    
+    <h1>Register</h1>  
+
+        <form method="POST" >  
+            {% csrf_token %}  
+            <table>  
+                {{ form.as_table }}  
+                <tr>  
+                    <td></td>
+                    <td><input type="submit" name="submit" value="Daftar"/></td>  
+                </tr>  
+            </table>  
+        </form>
+
+    {% if messages %}  
+        <ul>   
+            {% for message in messages %}  
+                <li>{{ message }}</li>  
+                {% endfor %}  
+        </ul>   
+    {% endif %}
+
+</div>  
+
+{% endblock content %}
+```

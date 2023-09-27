@@ -6,6 +6,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ngoppish App</title>
 
+<style>     
+      th, td {
+        padding: 20px;
+      }
+      button{
+        margin: 5px;
+        cursor: pointer;
+      }
+</style>
+
 {% endblock meta %}
 
 {% block content %}
@@ -19,15 +29,20 @@
 <table>
     <tr>
         <th>Name</th>
-        <th>Price</th>
+        <th>Amount</th>
         <th>Description</th>
     </tr>
 
     {% for product in products %}
         <tr>
             <td>{{product.name}}</td>
-            <td>{{product.amount}}</td>
+            <td>
+                <a href="{% url 'main:edit-amount' product.id 0 %}"><button>-</button></a>
+                {{product.amount}}
+                <a href="{% url 'main:edit-amount' product.id 1 %}"><button>+</button></a>
+            </td>
             <td>{{product.description}}</td>
+            <td><a href="{% url 'main:delete-product' product.id %}"><button>Delete product</button></a><td>
         </tr>
     {% endfor %}
 </table>
@@ -37,5 +52,13 @@
         Add New Product
     </button>
 </a>
+
+<a href="{% url 'main:logout' %}">
+    <button>
+        Logout
+    </button>
+</a>
+
+<h5>Sesi terakhir login: {{ last_login }}</h5>
 
 {% endblock content %}
