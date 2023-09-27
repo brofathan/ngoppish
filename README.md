@@ -513,9 +513,9 @@ from django.contrib.auth.decorators import login_required
 
 15. Membuat dua akun dengan tiga dummy data
 
-Akun pertama:
+Akun pertama: <br>
 ![image](https://github.com/brofathan/ngoppish/assets/45114836/4ebfd11c-c70a-44c6-ada6-bed1663913c4)
-
-Akun kedua:
+<br><br>
+Akun kedua: <br>
 ![image](https://github.com/brofathan/ngoppish/assets/45114836/2dad9be2-cced-4824-b1aa-14256b9eb055)
 
