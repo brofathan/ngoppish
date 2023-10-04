@@ -6,39 +6,44 @@
 
 {% block content %}
 
-<div class = "login">
+<div class = "flex bg-indigo-300 h-screen flex-col items-center justify-center">
+    <div class = "w-100 shadow-lg bg-white rounded-xl p-10 pt-7">
+        <div class="text-indigo-800 text-3xl font-extrabold text-center mb-5 pb-1">ngoppish</div>
+        <hr>
+        <div class="text-2xl text-center mt-3">Login</div>
 
-    <h1>Login</h1>
+        <form method="POST" action="" class="p-3">
+            {% csrf_token %}
+            <table class="border-spacing-3 border-separate">
+                <tr>
+                    <div>
+                        <p>Username</p>
+                        <input type="text" name="username" placeholder="Username" class="form-control w-full h-9 text-base border-gray-300 bg-gray-200 focus:bg-gray-50">
+                    </div>
+                </tr>  
+                <tr>
+                    <div class="mt-3">
+                        <p>Password</p>
+                        <input type="password" name="password" placeholder="Password" class="form-control w-full h-9 text-base border-gray-300 bg-gray-200 focus:bg-gray-50">
+                    </div>
+                </tr>
 
-    <form method="POST" action="">
-        {% csrf_token %}
-        <table>
-            <tr>
-                <td>Username: </td>
-                <td><input type="text" name="username" placeholder="Username" class="form-control"></td>
-            </tr>
-                    
-            <tr>
-                <td>Password: </td>
-                <td><input type="password" name="password" placeholder="Password" class="form-control"></td>
-            </tr>
+                <tr>
+                    <input class="mt-5 text-center bg-indigo-700 text-indigo-100 w-full rounded-md p-0.5 py-1 cursor-pointer" type="submit" value="Login">
+                </tr>
+            </table>
+        </form>
 
-            <tr>
-                <td></td>
-                <td><input class="btn login_btn" type="submit" value="Login"></td>
-            </tr>
-        </table>
-    </form>
-
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}     
-        
-    Don't have an account yet? <a href="{% url 'main:register' %}">Register Now</a>
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li class="text-red-500">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}     
+            
+        <p>Don't have an account yet? <a class="text-blue-500" href="{% url 'main:register' %}">Register Now</a></p>
+    </div>
 
 </div>
 

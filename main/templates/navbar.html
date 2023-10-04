@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<nav class="flex justify-between items-center w-full bg-indigo-50 h-[50px] mx-auto fixed">
+    <div class="text-indigo-800 text-3xl font-extrabold text-center mx-5 pb-1 cursor-default">ngoppish</div>
+    <div class = "cursor-pointer w-[100px] bg-indigo-800 text-indigo-50 rounded-md mx-5 px-[10px] text-center">
+        <a href="{% url 'main:logout' %}">Logout</a>
+    </div>
+</nav>
+
+{% endblock content %}

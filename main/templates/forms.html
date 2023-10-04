@@ -2,12 +2,14 @@
 
 {% block content %}
 
+{% include "navbar.html" %}
+
 <form action="." method="POST">{% csrf_token %}
     <table>
         {{form.as_table}}
     </table>
 
-    <input type="submit" value="Save">
+    <input type="submit" value="Save" class="mt-5 text-center bg-indigo-700 text-indigo-100 w-[50px] rounded-md p-0.5 py-1 cursor-pointer ml-[100px]">
 </form>
 
 {% endblock content %}

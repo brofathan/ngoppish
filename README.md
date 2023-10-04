@@ -613,3 +613,41 @@ def logout_user(request):
 
 <hr>
 <hr>
+
+## Jelaskan manfaat dari setiap element selector dan kapan waktu yang tepat untuk menggunakannya.
+
+Selector berfungsi agar kita bisa memilih bagian html atau elemen html mana yang mau kita style menggunakan css
+- Element Selector, yaitu memilih element html mana yang akan dilakukan styling
+- ID selector, yaitu memilih ID pada atribut ID di elemen html.
+- Class selector, yaitu memilih class pada atribut class di elemen html.
+
+## Jelaskan HTML5 Tag yang kamu ketahui.
+- Tag ```<a>``` berfungsi untuk menyisipkan link pada element kita.
+- Tag ```<audio>``` berfungsi untuk memasukkan suara atau audio stream ke html document kita.
+- Tag ```<header>``` berfungsi untuk mendefinisikan bagian header pada website kita.
+- Tag ```<footer>``` berfungsi untuk mendefinisikan bagian footer pada website kita.
+- Tag ```<nav>``` berfungsi untuk mendefinisikan bagian navigation pada website kita.
+- Tag ```<picture>``` berfungsi untuk container yang berisi banyak image.
+- Tag ```<video>``` berfungsi untuk menampilkan video di dalam html document.
+
+## Jelaskan perbedaan antara margin dan padding.
+- Padding adalah jarak atau gap antara content di dalam sebuah container dengan border containernya.
+- Margin adalah jarak atau gap antara sebuah element dengan element yang lainnya.
+
+## Jelaskan perbedaan antara framework CSS Tailwind dan Bootstrap. Kapan sebaiknya kita menggunakan Bootstrap daripada Tailwind, dan sebaliknya?
+- Framework tailwind lebih membebaskan developer dalam membuat websitenya karena class-class yang didefinisikan lebih kurang terstruktur atau kurang ter-develop untuk elemennya. Karena itu, tiap developer yang menggunakan tailwind pasti masing-masing memiliki design yang unik.
+- Framework bootstrap class-class elemennya lebih ter-develop. Dalam artian, beberapa elemen itu sudah jadi dan developer tinggal memakainya, seperti template. Contohnya seperti class navbar dan button sudah disediakan oleh bootstrap. Karena itu, developer kurang bisa berkreasi dalam pembuatan websitenya.
+
+## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+
+1. Karena saya menggunakan tailwind, saya menginstall dulu django tailwind dengan bantuan dokumentasi django.
+2. Menambahkan bg-color pada tag body di base.html
+3. Menambahkan class display flex di container pada login.html, karena display flex memudahkan untuk positioning element.
+4. Menambhakan class-class lain seperti margin, padding, warna, font size, width, height, dan lain-lain supaya tampilan login menjadi lebih menarik dan proper.
+5. Membuat file navbar.html dan men-include-nya di file main.html dan forms.html.
+6. Menambahkan class width-full supaya panjang navbar sepanjang page.
+7. Menambahkan elemen-elemen di dalam navbar yang berupa nama website dan tombol logout.
+8. Style navbar.
+9. Menambahkan class diplay flex di elemen container list product.
+10. Menambahkan class-class width, height, diplay flex, background color di tiap-tiap product yang ada di list product supaya tampilan berbentuk cards.
+11. Langkah terakhir yaitu melakukan pewarnaan supaya website lebih menarik.
