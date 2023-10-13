@@ -4,14 +4,14 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .forms import ProductForm
 from .models import Product
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.core import serializers
 from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-import inspect
+from django.views.decorators.csrf import csrf_exempt
 
 
 @login_required(login_url="/login")
@@ -78,16 +78,20 @@ def delete_product(request, id):
     product.delete()
     return HttpResponseRedirect("/")
 
+@csrf_exempt
 def edit_product(request, id, param):
-    product = Product.objects.filter(pk=id)
+    if request.method == "POST":
+        product = Product.objects.filter(pk=id)
 
-    if param:
-        product.update(amount = product[0].amount + 1)
-    else:
-        if product[0].amount > 1:
-            product.update(amount = product[0].amount - 1)
+        if param:
+            product.update(amount = product[0].amount + 1)
+        else:
+            if product[0].amount > 1:
+                product.update(amount = product[0].amount - 1)
 
-    return HttpResponseRedirect("/")
+        return HttpResponse(b"OK", status=200)
+    
+    return HttpResponseNotFound()
 
 def show_xml(request):
     data = Product.objects.all()
@@ -104,3 +108,33 @@ def show_xml_by_id(request, id):
 def show_json_by_id(request, id):
     data = Product.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+def get_product_json(request):
+    product_item = Product.objects.filter(user=request.user)
+    return HttpResponse(serializers.serialize('json', product_item))
+
+@csrf_exempt
+def add_product_ajax(request):
+    if request.method == 'POST':
+        name = request.POST.get("name")
+        amount = request.POST.get("amount")
+        description = request.POST.get("description")
+        user = request.user
+
+        new_product = Product(name=name, amount=amount, description=description, user=user)
+        new_product.save()
+
+        return HttpResponse(b"CREATED", status=201)
+
+    return HttpResponseNotFound()
+
+@csrf_exempt
+def delete_product_ajax(request, id):
+    if request.method == 'DELETE':
+        product = Product.objects.filter(pk=id)
+
+        product.delete()
+
+        return HttpResponse(b"OK", status=200)
+    
+    return HttpResponseNotFound()

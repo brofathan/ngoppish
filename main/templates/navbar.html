@@ -2,10 +2,12 @@
 
 {% block content %}
 
-<nav class="flex justify-between items-center w-full bg-indigo-50 h-[50px] mx-auto fixed">
-    <div class="text-indigo-800 text-3xl font-extrabold text-center mx-5 pb-1 cursor-default">ngoppish</div>
-    <div class = "cursor-pointer w-[100px] bg-indigo-800 text-indigo-50 rounded-md mx-5 px-[10px] text-center">
-        <a href="{% url 'main:logout' %}">Logout</a>
+<nav class="sticky top-0">
+    <div class="flex justify-between items-center bg-[#3f4cad] h-[60px] px-28">
+        <div class="text-white text-2xl font-sans font-extrabold text-center mx-5 pb-1 cursor-default">ngoppish</div>
+        <div class="mx-2">
+            <a href="{% url 'main:logout' %}" class="py-2 px-4 border-2 border-gray-300 rounded-full"><i class="fa-solid fa-right-from-bracket" style="color: white;"></i></a>
+        </div>
     </div>
 </nav>
 

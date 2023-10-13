@@ -651,3 +651,187 @@ Selector berfungsi agar kita bisa memilih bagian html atau elemen html mana yang
 9. Menambahkan class diplay flex di elemen container list product.
 10. Menambahkan class-class width, height, diplay flex, background color di tiap-tiap product yang ada di list product supaya tampilan berbentuk cards.
 11. Langkah terakhir yaitu melakukan pewarnaan supaya website lebih menarik.
+
+<hr>
+<hr>
+
+## Jelaskan perbedaan antara asynchronous programming dengan synchronous programming.
+
+Synchronous programming mengharuskan user untuk menunggu request dari server setelah user melakukan interaksi event pada website. Namun, asynchronous programming memungkinkan user tidak menunggu request dari server sehingga user tetap bisa berinteraksi dengan web tanpa adanya delay.
+
+## Dalam penerapan JavaScript dan AJAX, terdapat penerapan paradigma event-driven programming. Jelaskan maksud dari paradigma tersebut dan sebutkan salah satu contoh penerapannya pada tugas ini.
+
+Pada event-driven programming terdapat event listeners dan event itu sendiri. Event akan di-trigger oleh user dan nantinya akan ditangkap oleh event listeners agar event dihandle dan dilakukan ke webpage. Contoh penerapannya adalah misal saat tombol delete product dipencet maka tombol tersebut dikaitkan ke function deleteProduct(id) oleh atribut onclick di html.
+
+## Jelaskan penerapan asynchronous programming pada AJAX.
+
+Penerapan asynchronous programming pada AJAX yaitu contohnya pada Fetch API. Karena saat melakukan FetchAPI, user tidak perlu me-reload webpage untuk mendapatkan data yang di-Fetch.
+
+## Pada PBP kali ini, penerapan AJAX dilakukan dengan menggunakan Fetch API daripada library jQuery. Bandingkanlah kedua teknologi tersebut dan tuliskan pendapat kamu teknologi manakah yang lebih baik untuk digunakan.
+
+Menurut saya menggunakan fetch API lebih baik karena merupakan promise-based. Jadi, yang saya ketahui, promise ini memungkinkan user mendapatkan message error atau success saat proses fetch data. Selain itu juga, Fetch API adalah bagian dari javascript jadi tidak perlu mengimpor library apa-apa dan juga syntax-nya seperti javascript.
+
+## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+
+1. Membuat fungsi untuk mengembalikan data product dalam JSON yang sudah di-filter berdasarkan user
+
+```py
+def get_product_json(request):
+    product_item = Product.objects.filter(user=request.user)
+    return HttpResponse(serializers.serialize('json', product_item))
+```
+
+2. Membuat fungsi di views.py untuk menambahkan produk dengan AJAX dan mengimpor juga csrf_exempt dari django.views.decorators.csrf
+
+```py
+@csrf_exempt
+def add_product_ajax(request):
+    if request.method == 'POST':
+        name = request.POST.get("name")
+        amount = request.POST.get("amount")
+        description = request.POST.get("description")
+        user = request.user
+
+        new_product = Product(name=name, amount=amount, description=description, user=user)
+        new_product.save()
+
+        return HttpResponse(b"CREATED", status=201)
+
+    return HttpResponseNotFound()
+```
+
+Bedanya dengan tidak menggunakan AJAX adalah pada returnnya. Kalau penambahan pada AJAX, hanya me-return HttpResponse saja.
+
+3. Membuat path di urls.py untuk fungsi-fungsi yang baru saja dibuat
+
+4. Melakukan FetchAPI di main.html meggunakan javascript.
+
+```js
+<script>
+    async function getProducts() {
+        return fetch("{% url 'main:get_product_json' %}").then((res) => res.json())
+    }
+</script>
+```
+
+Fetch ini dilakukan untuk mendapatkan item.
+
+5. Mengganti display cards menjadi.
+
+```html
+<div>
+    <div id="product_table" class="flex justify-evenly flex-wrap px-20 mt-7"></div>
+
+    <div class="self-center my-14">
+        <button>
+        </button>
+    </div>
+</div>
+```
+
+6. Menambahkan script untuk refresh product.
+
+```js
+    async function refreshProducts() {
+        document.getElementById("product_table").innerHTML = ""
+        const products = await getProducts()
+        let htmlString = ``
+        let amountString = Object.keys(products).length
+
+        products.forEach((product) => {
+            htmlString += `\n
+            <div class="flex flex-col m-5 bg-[#eceeff] rounded-md p-5 w-[45%] justify-between shadow-[5px_5px_0px_0px_rgba(63,76,173)]">
+                <div>
+                    <h1 class="text-2xl font-bold text-[#000000] mb-3">${product.fields.name}</h1>
+                
+                    <div class="min-h-[100px]">${product.fields.description}</div>
+                </div>
+
+                <div class="flex justify-end items-center mt-8">
+                    
+                    <div class="flex border-2 border-gray-300 mx-5">
+                        <a class="cursor-pointer text-[#000000] text-center px-[20px] border-r-2 border-gray-300" onclick="editProduct(${product.pk},0)">
+                            <button>-</button>
+                        </a>
+                        <div class="px-5">${product.fields.amount}</div>
+                        <a class="cursor-pointer text-[#000000] text-center px-[20px] border-l-2 border-gray-300" onclick="editProduct(${product.pk},1)">
+                            <button>+</button>
+                        </a>
+                    </div>
+
+                    <div>
+                        <a onclick="deleteProduct(${product.pk})"><button class="cursor-pointer w-[150px] bg-[#ff4136] text-indigo-50 rounded-md px-[10px] text-center">Delete product</button></a>
+                    </div>
+                    
+                </div>
+            </div>
+            ` 
+        })
+
+        document.getElementById("product_table").innerHTML = htmlString
+        document.getElementById("product_amount").innerHTML = amountString
+    }
+
+    refreshProducts()
+```
+
+Hal ini dilakukan untuk me-refresh tampilan (tidak perlu reload page) dari HTML menggunakan javascript agar data yang di Fetch secara live bisa langsung ditampilkan di page.
+
+7. Membuat modal untuk bisa menambahkan product
+
+```h
+  <div id="defaultModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+      <div class="relative w-full max-w-2xl max-h-full">
+          <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+              <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+                  <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                      Add product
+                  </h3>
+                  <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="defaultModal">
+                      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                      </svg>
+                      <span class="sr-only">Close modal</span>
+                  </button>
+              </div>
+              <div class="p-6 space-y-6">
+                <form id="form" onsubmit="return false;">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="name" class="col-form-label">Name:</label>
+                        <input type="text" class="form-control" id="name" name="name"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label for="amount" class="col-form-label">Amount:</label>
+                        <textarea class="form-control" id="amount" name="amount"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="col-form-label">Description:</label>
+                        <textarea class="form-control" id="description" name="description"></textarea>
+                    </div>
+                </form>
+              </div>
+              <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+                  <button data-modal-hide="defaultModal" type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Product</button>
+                  <button data-modal-hide="defaultModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Decline</button>
+              </div>
+          </div>
+      </div>
+  </div>
+```
+
+8. Membuat fungsi untuk addProduct di javascript
+
+```js
+    function addProduct() {
+        fetch("{% url 'main:add_product_ajax' %}", {
+            method: "POST",
+            body: new FormData(document.querySelector('#form'))
+        }).then(refreshProducts)
+
+        document.getElementById("form").reset()
+        return false
+    }
+
+    document.getElementById("button_add").onclick = addProduct
+```
