@@ -138,3 +138,4 @@ def delete_product_ajax(request, id):
         return HttpResponse(b"OK", status=200)
     
     return HttpResponseNotFound()
+
